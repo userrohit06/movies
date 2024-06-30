@@ -1,37 +1,39 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query"
+import { apiSlice } from './apiSlice'
 import { USERS_URL } from '../constants'
 
-export const usersApiSlice = createApi({
-    reducerPath: 'usersApi',
-    baseQuery: fetchBaseQuery({ baseUrl: USERS_URL }),
-
+export const usersApi = apiSlice.injectEndpoints({
+    // useSignInMutation,
+    // useSignUpMutation,
+    // useSignoutMutation,
+    // useProfileMutation,
+    // useGetUsersQuery
     endpoints: (builder) => ({
         signIn: builder.mutation({
             query: (data) => ({
-                url: `/signin`,
-                method: 'POST',
+                url: `${USERS_URL}/signin`,
+                method: "POST",
                 body: data
             })
         }),
 
         signUp: builder.mutation({
             query: (data) => ({
-                url: `/signup`,
-                method: 'POST',
+                url: `${USERS_URL}/signup`,
+                method: "POST",
                 body: data
             })
         }),
 
         signout: builder.mutation({
             query: () => ({
-                url: `/signout`,
-                method: 'POST'
+                url: `${USERS_URL}/signout`,
+                method: "POST"
             })
         }),
 
         profile: builder.mutation({
             query: (data) => ({
-                url: `/profile/update-user`,
+                url: `${USERS_URL}/profile/update-user`,
                 method: 'PUT',
                 body: data
             })
@@ -39,7 +41,7 @@ export const usersApiSlice = createApi({
 
         getUsers: builder.query({
             query: () => ({
-                url: `/all-users`
+                url: `${USERS_URL}/all-users`
             })
         })
     })
@@ -51,4 +53,4 @@ export const {
     useSignoutMutation,
     useProfileMutation,
     useGetUsersQuery
-} = usersApiSlice
+} = usersApi

@@ -1,14 +1,11 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query'
+import { apiSlice } from './apiSlice'
 import { GENRE_URL } from '../constants'
 
-export const genreApiSlice = createApi({
-    reducerPath: 'genreApiSlice',
-    baseQuery: fetchBaseQuery({ baseUrl: GENRE_URL }),
-
+export const genreApi = createApi({
     endpoints: (builder) => ({
         createGenre: builder.mutation({
             query: (newGenre) => ({
-                url: '/create-genre',
+                url: `${apiSlice}/create-genre`,
                 method: 'POST',
                 body: newGenre
             })
@@ -16,7 +13,7 @@ export const genreApiSlice = createApi({
 
         updateGenre: builder.mutation({
             query: ({ id, updateGenre }) => ({
-                url: `/update-genre/${id}`,
+                url: `${GENRE_URL}/update-genre/${id}`,
                 method: 'PUT',
                 body: updateGenre
             })
@@ -24,13 +21,13 @@ export const genreApiSlice = createApi({
 
         deleteGenre: builder.mutation({
             query: (id) => ({
-                url: `/remove-genre/${id}`,
+                url: `${GENRE_URL}/remove-genre/${id}`,
                 method: 'DELETE'
             })
         }),
 
         fetchGenres: builder.query({
-            query: () => `/genres`
+            query: () => `${GENRE_URL}/genres`
         })
     })
 })
@@ -40,4 +37,4 @@ export const {
     useUpdateGenreMutation,
     useDeleteGenreMutation,
     useFetchGenresQuery,
-} = genreApiSlice
+} = genreApi

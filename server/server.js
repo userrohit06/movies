@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import errorHandler from './middlewares/errorHandler.js'
 import cookieParser from 'cookie-parser'
 import connectDB from './config/db.js'
+import path from 'path'
 
 // import routes
 import userRouter from './routes/User.route.js'
@@ -13,8 +14,8 @@ import uploadRouter from './routes/Upload.route.js'
 const app = express()
 
 app.use(express.json())
-app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 dotenv.config()
 
 const PORT = process.env.PORT || 9000
@@ -26,6 +27,9 @@ app.use("/api/v1/genres", genreRouter)
 app.use("/api/v1/upload", uploadRouter)
 
 app.use(errorHandler)
+
+const __dirname = path.resolve()
+app.use("/uploads", express.static(path.join(__dirname + "/uploads")))
 
 connectDB()
     .then(() => {
